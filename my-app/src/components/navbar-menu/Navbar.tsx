@@ -1,23 +1,37 @@
+/* eslint-disable react/no-children-prop */
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { styles } from "./style";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
+  Button,
+} from "@nextui-org/react";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   {
+    id: "Home",
+    title: "Home",
+    href: "/Home",
+  },
+  {
     id: "Create Post",
     title: "Create Post",
+    href: "#",
   },
   {
-    id: "Settings",
-    title: "Settings",
-  },
-  {
-    id: "Logout",
-    title: "Logout",
+    id: "Edit",
+    title: "EditPosts",
+    href: "/EditPost",
   },
 ];
 export default function Navbar() {
+  const pathname = usePathname();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -34,16 +48,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <>
-      <nav
-        className={`${
-          styles.paddingX
-        } w-full flex items-center py-5 fixed top-0 z-20 ${
-          scrolled ? "bg-primary" : "bg-transparent"
-        }`}
-      >
+    <header className="sticky top-0 z-40 w-full border-b bg-background">
+      <div className="container flex h-16 items-center justify-between py-4">
         <Link
-          href="/"
+          href="/App"
           className="flex items-center gap-2"
           onClick={() => {
             setActive("");
@@ -53,23 +61,43 @@ export default function Navbar() {
           {" "}
           Logo
         </Link>
-        <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-          <ul className="list-none hidden sm:flex flex-row gap-10">
-            {navLinks.map((link) => (
+        <nav
+          className={`${styles.paddingX} flex items-center gap-4 ${
+            scrolled ? "bg-primary" : "bg-transparent"
+          }`}
+        >
+          <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+            <ul className="list-none hidden sm:flex flex-row gap-10">
+              {navLinks.map((link) => (
+                <Link key={link.id} href={link.href}>
+                  {link.title}
+                </Link>
+              ))}
               <li
-                key={link.id}
-                className={`${
-                  active === link.title ? "text-white" : "text-secondary"
-                } hover:text-white text-[18px]
-          font-medium cursor-pointer`}
-                onClick={() => setActive(link.title)}
+                className="hover:underline text-[18px]
+          font-medium cursor-pointer"
               >
-                <a href={`#${link.id}`}>{link.title}</a>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <Button>User</Button>
+                  </DropdownTrigger>
+                  <DropdownMenu>
+                    <DropdownItem
+                      key="account"
+                      className="flex w-full text-[20px]"
+                    >
+                      Account
+                    </DropdownItem>
+                    <DropdownItem key="posts" className="text-[20px]">
+                      Posts
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-    </>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
   );
 }

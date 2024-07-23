@@ -1,9 +1,8 @@
-import Cards from "@/components/Cards/Cards";
-
-export default function Home() {
+"use client";
+export default function App() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Cards />
-    </main>
+    <>
+      <h1>Welcome Home</h1>
+    </>
   );
 }

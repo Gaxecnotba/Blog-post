@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/dropdown": "^2.1.29",
+    "@nextui-org/react": "^2.4.6",
+    "@nextui-org/table": "^2.0.39",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.407.0",
