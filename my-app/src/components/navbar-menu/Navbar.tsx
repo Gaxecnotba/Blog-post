@@ -6,13 +6,10 @@ import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
-  DropdownSection,
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { usePathname } from "next/navigation";
-
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const navLinks = [
   {
@@ -31,78 +28,76 @@ const navLinks = [
     href: "/EditPost",
   },
 ];
+
 export default function Navbar() {
-  const pathname = usePathname();
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
+  const { data: session } = useSession();
   const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
     function handleScroll() {
       const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(scrollTop > 100);
     }
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center justify-between py-4">
-        <Link
-          href="/"
-          className="flex items-center gap-2"
-          onClick={() => {
-            setActive("");
-            window.scrollTo(0, 0);
-          }}
-        >
-          {" "}
-          Logo
+    <header
+      className={`sticky top-0 z-40 w-full border-b bg-gray-950 ${
+        scrolled ? "shadow-md" : ""
+      }`}
+    >
+      <div className="flex justify-between items-center px-24 py-3 text-white">
+        <Link href="/" className="text-xl font-bold">
+          Blog Post
         </Link>
-        <nav className="">
-          <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-            <ul className="list-none hidden sm:flex flex-row gap-10">
-              {navLinks.map((link) => (
-                <Link key={link.id} href={link.href}>
-                  {link.title}
-                </Link>
-              ))}
-              <li
-                className="hover:underline text-[18px]
-          font-medium cursor-pointer"
-              >
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button>User</Button>
-                  </DropdownTrigger>
-                  <DropdownMenu>
-                    <DropdownItem
-                      key="account"
-                      className="flex w-full text-[18px]"
-                    >
-                      Account
-                    </DropdownItem>
-                    <DropdownItem key="posts" className="text-[18px]">
-                      Posts
-                    </DropdownItem>
-                    <DropdownItem key="posts" className="text-[18px]">
-                      Posts
-                    </DropdownItem>
-                    <DropdownItem
-                      key="posts"
-                      className="text-[18px]"
-                      onClick={() => signOut()}
-                    >
-                      Log Out
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </li>
-            </ul>
-          </div>
+        <nav>
+          <ul className="flex gap-x-2">
+            {!session ? (
+              <>
+                <li>
+                  <Link href="/">Home</Link>
+                </li>
+                <li>
+                  <Link href="/auth/login">Login</Link>
+                </li>
+                <li>
+                  <Link href="/auth/register">Register</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                {navLinks.map((link) => (
+                  <li key={link.id}>
+                    <Link href={link.href}>{link.title}</Link>
+                  </li>
+                ))}
+                <li>
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <Button>User</Button>
+                    </DropdownTrigger>
+                    <DropdownMenu>
+                      <DropdownItem key="account" className="text-[18px]">
+                        Account
+                      </DropdownItem>
+                      <DropdownItem key="posts" className="text-[18px]">
+                        Posts
+                      </DropdownItem>
+                      <DropdownItem
+                        key="logout"
+                        className="text-[18px]"
+                        onClick={() => signOut()}
+                      >
+                        Log Out
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </li>
+              </>
+            )}
+          </ul>
         </nav>
       </div>
     </header>
