@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/Cards/new.js",
-    "src/lib/prisma.js"
+    "src/lib/db.js"
   ],
   "exclude": [
     "node_modules"

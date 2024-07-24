@@ -2,7 +2,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { styles } from "./style";
 import {
   Dropdown,
   DropdownTrigger,
@@ -51,7 +50,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center justify-between py-4">
         <Link
-          href="/App"
+          href="/"
           className="flex items-center gap-2"
           onClick={() => {
             setActive("");
@@ -61,11 +60,7 @@ export default function Navbar() {
           {" "}
           Logo
         </Link>
-        <nav
-          className={`${styles.paddingX} flex items-center gap-4 ${
-            scrolled ? "bg-primary" : "bg-transparent"
-          }`}
-        >
+        <nav className="">
           <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
             <ul className="list-none hidden sm:flex flex-row gap-10">
               {navLinks.map((link) => (
