@@ -12,6 +12,8 @@ import {
 } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 
+import { signOut } from "next-auth/react";
+
 const navLinks = [
   {
     id: "Home",
@@ -79,12 +81,22 @@ export default function Navbar() {
                   <DropdownMenu>
                     <DropdownItem
                       key="account"
-                      className="flex w-full text-[20px]"
+                      className="flex w-full text-[18px]"
                     >
                       Account
                     </DropdownItem>
-                    <DropdownItem key="posts" className="text-[20px]">
+                    <DropdownItem key="posts" className="text-[18px]">
                       Posts
+                    </DropdownItem>
+                    <DropdownItem key="posts" className="text-[18px]">
+                      Posts
+                    </DropdownItem>
+                    <DropdownItem
+                      key="posts"
+                      className="text-[18px]"
+                      onClick={() => signOut()}
+                    >
+                      Log Out
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>

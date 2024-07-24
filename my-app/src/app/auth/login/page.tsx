@@ -23,6 +23,8 @@ export default function Login() {
     console.log(res);
     if (res?.ok === true) {
       router.push("/Home");
+    } else {
+      setError(res?.error);
     }
     // if (res?.error) {
     //   alert(res.error);
@@ -34,6 +36,11 @@ export default function Login() {
     <>
       <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
         <form onSubmit={onSubmit} className="w-1/4">
+          {error && (
+            <p className="bg-red-500 text-lg text-white p-3 rounded mb-2">
+              {error}
+            </p>
+          )}
           <h1 className="text-slate-200 font-bold text-4xl mb-4">Login Page</h1>
           <label htmlFor="email" className="text-slate-500  mb-2 block text-sm">
             Email:
