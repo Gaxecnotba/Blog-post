@@ -17,7 +17,7 @@ const authOptions = {
             email: credentials.email,
           },
         });
-        if (!userFound) return null;
+        if (!userFound) throw new Error("User not found");
         console.log(userFound);
         const matchPassword = await bcrypt.compare(
           credentials.password,

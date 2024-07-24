@@ -10,11 +10,25 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const router = useRouter();
+  const router = useRouter();
   const [error, setError] = useState(null);
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data);
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    console.log(res);
+    if (res?.ok === true) {
+      router.push("/Home");
+    }
+    // if (res?.error) {
+    //   alert(res.error);
+    // } else {
+    //   console.log("sending to /homepage");
+    // }
   });
   return (
     <>
