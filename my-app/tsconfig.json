@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Cards/new.js",
+    "src/components/Cards/new.ts",
     "src/lib/db.js",
     "src/middleware.js"
   ],

@@ -20,12 +20,7 @@ const navLinks = [
   {
     id: "Create Post",
     title: "Create Post",
-    href: "#",
-  },
-  {
-    id: "Edit",
-    title: "EditPosts",
-    href: "/EditPost",
+    href: "/CreatePost",
   },
 ];
 

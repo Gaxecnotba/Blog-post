@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -7,22 +9,41 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { news } from "@/components/Cards/new";
+type NewsItem = {
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+  auth: string;
+};
 
-export default function Cards() {
+type CardsProps = {
+  news: NewsItem[];
+  onEditClick: (id: string) => void;
+};
+
+export default function Cards({ news, onEditClick }: CardsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {news.map((item, index) => (
-        <Card key={index}>
+      {news.map((item) => (
+        <Card
+          key={item.id}
+          className="group hover:bg-sky-500 cursor-pointer"
+          onClick={() => onEditClick(item.id)}
+        >
           <CardHeader>
-            <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.date}</CardDescription>
+            <CardTitle className="group-hover:text-white">
+              {item.title}
+            </CardTitle>
+            <CardDescription className="group-hover:text-white">
+              {item.date}
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <p>{item.description}</p>
+            <p className="group-hover:text-white">{item.description}</p>
           </CardContent>
           <CardFooter>
-            <p>Card Footer</p>
+            <p className="group-hover:text-white">{item.auth}</p>
           </CardFooter>
         </Card>
       ))}
