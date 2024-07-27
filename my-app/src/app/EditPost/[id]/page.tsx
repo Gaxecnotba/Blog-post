@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { news } from "@/components/Cards/new";
-import { useRouter } from "next/navigation";
+import { news } from "@/lib/new";
 
-export default function EditCard({ params }) {
-  const router = useRouter();
-  const { id } = params;
+export default function EditCard(params: string) {
+  const id: string = params;
   const [card, setCard] = useState(null);
   const [error, setError] = useState(false);
 
@@ -25,12 +23,6 @@ export default function EditCard({ params }) {
     }
   }, [id]);
 
-  useEffect(() => {
-    if (error) {
-      router.push("/EditPost/error");
-    }
-  }, [error, router]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCard((prevCard) => ({
@@ -42,9 +34,6 @@ export default function EditCard({ params }) {
   const handleSave = () => {
     console.log("Card saved:", card);
   };
-
-  if (error) return null;
-  if (!card) return <p>Loading...</p>;
   return (
     <div className="h-[calc(100vh-6rem)] flex justify-center items-center">
       <h1 className="text-slate-200 font-bold text-4xl mb-4">Edit Card</h1>

@@ -1,25 +1,32 @@
 "use client";
 import { useState } from "react";
 
-export default function CreateCard() {
-  const [card, setCard] = useState({
-    id: "",
-    title: "",
-    date: "",
-    description: "",
-    auth: "",
-  });
-
-  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+export default function CreatePost() {
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [auth, setAuth] = useState("");
+  const handleonSubmit = (e: {
+    target: { name: any; value: any };
+    prevenDefault: () => void;
+  }) => {
     const { name, value } = e.target;
-    setCard((prevCard) => ({
-      ...prevCard,
-      [name]: value,
-    }));
+    e.prevenDefault();
+    const newPost = {
+      id: Date.now().toString(),
+      title,
+      date,
+      description,
+      auth,
+    };
+    setTitle("");
+    setDate("");
+    setDescription("");
+    setAuth("");
   };
 
   const handleSave = () => {
-    console.log("Card created:", card);
+    console.log("Card created:");
   };
 
   return (
@@ -27,16 +34,19 @@ export default function CreateCard() {
       <h1 className="text-slate-200 font-bold text-4xl mb-4 p-2">
         Create Card
       </h1>
-      <form className="w-1/4">
+      <form className="w-1/4" onSubmit={handleonSubmit}>
         <label htmlFor="title" className="text-slate-500  mb-2 block text-lg">
           Title
         </label>
         <input
           type="text"
           name="title"
-          value={card.title}
-          onChange={handleInputChange}
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
+          required
         />
         <label htmlFor="title" className="text-slate-500  mb-2 block text-lg">
           Date
@@ -44,8 +54,10 @@ export default function CreateCard() {
         <input
           type="text"
           name="date"
-          value={card.date}
-          onChange={handleInputChange}
+          value={date}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
         />
         <div>
@@ -54,8 +66,10 @@ export default function CreateCard() {
           </label>
           <textarea
             name="description"
-            value={card.description}
-            onChange={handleInputChange}
+            value={description}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
             className=" bg-slate-900 text-slate-300 w-full bg-contain"
           />
         </div>
@@ -64,8 +78,10 @@ export default function CreateCard() {
         </label>
         <textarea
           name="auth"
-          value={card.auth}
-          onChange={handleInputChange}
+          value={auth}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
           className=" bg-slate-900 text-slate-300 w-full"
         />
         <button

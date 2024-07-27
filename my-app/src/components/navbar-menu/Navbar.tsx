@@ -60,6 +60,9 @@ export default function Navbar() {
                 <li>
                   <Link href="/auth/register">Register</Link>
                 </li>
+                <li>
+                  <Link href="/View">View News</Link>
+                </li>
               </>
             ) : (
               <>

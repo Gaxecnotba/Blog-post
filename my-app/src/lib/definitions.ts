@@ -7,8 +7,17 @@ export type PostEdit = {
 };
 
 export type Post = {
-  id: number;
-  title: string;
+  id: string;
+  auth: string;
+  date: string;
   description: string;
-  date: Date;
+  title: string;
+};
+
+export type ViewPost = {
+  id: string;
+  auth: string;
+  date: string;
+  description: string;
+  title: string;
 };

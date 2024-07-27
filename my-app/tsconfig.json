@@ -32,9 +32,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Cards/new.ts",
+    "src/lib/new.js",
     "src/lib/db.js",
-    "src/middleware.js"
+    "src/middleware.js",
+    "src/lib/actions.tjs"
   ],
   "exclude": [
     "node_modules"

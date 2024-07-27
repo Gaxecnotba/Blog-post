@@ -2,24 +2,29 @@
 
 import { useRouter } from "next/navigation";
 import Cards from "@/components/Cards/Cards";
-import { news } from "@/components/Cards/new";
-import { useEffect, useState } from "react";
+import { news as originalNews } from "@/lib/new";
+import { useState } from "react";
+
+// const Cards= dynamic(()=> require('@/components/Cards/Cards'))
 
 export default function HomePage() {
   const router = useRouter();
-  const [error, setError] = useState(false);
+  const [news, setNews] = useState(originalNews);
   const handleEditClick = (id: string) => {
-    router.push(`/EditPost/${id}`);
+    router.push(`/View/${id}`);
   };
-  useEffect(() => {
-    if (error) {
-      router.push("/Home/error");
-    }
-  }, [error, router]);
-
+  const handleAddedNews = (newPost: {
+    id: string;
+    auth: string;
+    date: string;
+    description: string;
+    title: string;
+  }) => {
+    setNews([...news, newPost]);
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Cards news={news} onEditClick={handleEditClick} />
+      <Cards news={originalNews} onEditClick={handleEditClick} />
     </main>
   );
 }

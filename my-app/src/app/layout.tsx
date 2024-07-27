@@ -16,7 +16,7 @@ export default function Layout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <SessionProvider session={session}>
           <Navbar />
           {children}
