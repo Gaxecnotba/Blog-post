@@ -2,17 +2,14 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "seed": "node ./src/lib/actions.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@nextui-org/dropdown": "^2.1.29",
-    "@nextui-org/input": "^2.2.4",
     "@nextui-org/react": "^2.4.6",
     "@nextui-org/table": "^2.0.39",
     "@prisma/client": "5.17.0",

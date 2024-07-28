@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import {
   Card,
   CardContent,
@@ -11,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { news } from "@/lib/new";
 
-export default function ViewCard({ id }: { id: number }) {
+export default function ViewCard({ id }: { id: string }) {
   const newid = id;
   const [card, setCard] = useState([news]);
 

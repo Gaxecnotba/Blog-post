@@ -11,7 +11,7 @@ export default function HomePage() {
   const { data: session } = useSession();
   const router = useRouter();
   const [news, setNews] = useState(originalNews);
-  const handleEditClick = (id: number) => {
+  const handleEditClick = (id: string) => {
     if (session) {
       router.push(`/View/${id}`);
     } else {
@@ -20,7 +20,7 @@ export default function HomePage() {
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Cards news={news} onEditClick={handleEditClick} />
+      <Cards news={originalNews} onEditClick={handleEditClick} />
     </main>
   );
 }

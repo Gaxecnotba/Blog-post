@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface SavePostProps {
   onSave: (newPost: {
-    id: number;
+    id: string;
     title: string;
     date: string;
     description: string;

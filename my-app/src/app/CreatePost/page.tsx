@@ -6,7 +6,7 @@ import NewCard from "@/components/Cards/NewCard";
 export default function CreatePost() {
   const [news, setNews] = useState(originalNews);
   const handleAddedNews = (newPost: {
-    id: number;
+    id: string;
     auth: string;
     date: string;
     description: string;

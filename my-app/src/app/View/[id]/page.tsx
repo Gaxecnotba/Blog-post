@@ -6,7 +6,7 @@ import { news } from "@/lib/new";
 import { useSession } from "next-auth/react";
 import { UpdatePost, CreatePost } from "@/ui/EditPost/buttons";
 
-export default function Post({ params }: { params: { id: number } }) {
+export default function Post({ params }: { params: { id: string } }) {
   const { data: session } = useSession();
   const [selectedPost, setSelectedPost] = useState({});
   const id: string = params.id;

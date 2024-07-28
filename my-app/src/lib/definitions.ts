@@ -8,14 +8,14 @@ export type PostEdit = {
 };
 
 export type Post = {
-  id: number;
+  id: string;
   auth: string;
   date: string;
   description: string;
   title: string;
 };
 export type CreatePost = {
-  id: number;
+  id: string;
   auth: string;
   date: string;
   description: string;

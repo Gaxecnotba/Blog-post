@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { news } from "@/lib/new";
 import SavePost from "@/ui/CreatePost/create-post";
 
-export default function EditCard({ params }: { params: { id: number } }) {
+export default function EditCard({ params }: { params: { id: string } }) {
   const id: string = params.id;
   const [card, setCard] = useState({});
   const [error, setError] = useState(false);

@@ -19,7 +19,7 @@ type NewsItem = {
 
 type CardsProps = {
   news: NewsItem[];
-  onEditClick: (id: number) => void;
+  onEditClick: (id: string) => void;
 };
 import NewCard from "./NewCard";
 
