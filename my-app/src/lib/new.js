@@ -1,6 +1,6 @@
-export const news = [
+const news = [
   {
-    id: "1",
+    id: 1,
     auth: "Pepe Quiroz",
     date: "September 11, 2001",
     description:
@@ -8,14 +8,14 @@ export const news = [
     title: "9/11 Terrorist Attacks",
   },
   {
-    id: "2",
+    id: 2,
     auth: "Pepe Quiroz",
     date: "March 20, 2003",
     description: "The United States invades Iraq, beginning the Iraq War.",
     title: "Invasion of Iraq",
   },
   {
-    id: "3",
+    id: 3,
     auth: "Pepe Quiroz",
     date: "May 2, 2011",
     description:
@@ -23,7 +23,7 @@ export const news = [
     title: "Death of Osama bin Laden",
   },
   {
-    id: "4",
+    id: 4,
     auth: "Pepe Quiroz",
     date: "September 15, 2008",
     description:
@@ -31,7 +31,7 @@ export const news = [
     title: "Lehman Brothers Bankruptcy",
   },
   {
-    id: "5",
+    id: 5,
     auth: "Pepe Quiroz",
     date: "August 29, 2005",
     description:
@@ -39,7 +39,7 @@ export const news = [
     title: "Hurricane Katrina",
   },
   {
-    id: "6",
+    id: 6,
     auth: "Pepe Quiroz",
     date: "July 7, 2005",
     description:
@@ -47,7 +47,7 @@ export const news = [
     title: "7/7 London Bombings",
   },
   {
-    id: "7",
+    id: 7,
     auth: "Pepe Quiroz",
     date: "March 11, 2011",
     description:
@@ -55,7 +55,7 @@ export const news = [
     title: "Fukushima Nuclear Disaster",
   },
   {
-    id: "8",
+    id: 8,
     auth: "Pepe Quiroz",
     date: "December 26, 2004",
     description:
@@ -63,7 +63,7 @@ export const news = [
     title: "2004 Indian Ocean Tsunami",
   },
   {
-    id: "9",
+    id: 9,
     auth: "Pepe Quiroz",
     date: "October 29, 2012",
     description:
@@ -71,3 +71,5 @@ export const news = [
     title: "Hurricane Sandy",
   },
 ];
+
+module.exports = { news };

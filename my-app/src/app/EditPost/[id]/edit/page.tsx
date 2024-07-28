@@ -2,20 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { news } from "@/lib/new";
+import SavePost from "@/ui/CreatePost/create-post";
 
-export default function EditCard(params: string) {
-  const id: string = params;
-  const [card, setCard] = useState(null);
+export default function EditCard({ params }: { params: { id: number } }) {
+  const id: string = params.id;
+  const [card, setCard] = useState({});
   const [error, setError] = useState(false);
 
   useEffect(() => {
     try {
       if (id) {
         const selectedCard = news.find((item) => item.id === id);
-        if (!selectedCard) {
-          throw new Error("Card not found");
+        if (selectedCard) {
+          setCard(selectedCard);
         }
-        setCard(selectedCard);
+      } else {
+        console.error("Card id not found");
       }
     } catch (e) {
       console.error(e);
@@ -23,7 +25,7 @@ export default function EditCard(params: string) {
     }
   }, [id]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setCard((prevCard) => ({
       ...prevCard,

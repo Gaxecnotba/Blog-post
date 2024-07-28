@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 type NewsItem = {
-  id: string;
+  id: number;
   title: string;
   date: string;
   description: string;
@@ -19,8 +19,9 @@ type NewsItem = {
 
 type CardsProps = {
   news: NewsItem[];
-  onEditClick: (id: string) => void;
+  onEditClick: (id: number) => void;
 };
+import NewCard from "./NewCard";
 
 export default function Cards({ news, onEditClick }: CardsProps) {
   return (

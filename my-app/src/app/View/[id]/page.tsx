@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import ViewPost from "@/ui/EditPost/view-post";
 import { news } from "@/lib/new";
+import { useSession } from "next-auth/react";
+import { UpdatePost, CreatePost } from "@/ui/EditPost/buttons";
 
-export default function Post({ params }: { params: { id: string } }) {
+export default function Post({ params }: { params: { id: number } }) {
+  const { data: session } = useSession();
   const [selectedPost, setSelectedPost] = useState({});
   const id: string = params.id;
   console.log(id);
@@ -16,5 +19,16 @@ export default function Post({ params }: { params: { id: string } }) {
       console.error("Card not found");
     }
   }, [id]);
-  return <ViewPost post={selectedPost} />;
+  return (
+    <div>
+      {!session ? (
+        <ViewPost post={selectedPost} />
+      ) : (
+        <>
+          <ViewPost post={selectedPost} />
+          <UpdatePost id={id} /> <CreatePost />
+        </>
+      )}
+    </div>
+  );
 }

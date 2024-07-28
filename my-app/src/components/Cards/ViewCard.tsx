@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { news } from "@/lib/new";
 
-export default function ViewCard({ id }: { id: string }) {
+export default function ViewCard({ id }: { id: number }) {
   const newid = id;
   const [card, setCard] = useState([news]);
 

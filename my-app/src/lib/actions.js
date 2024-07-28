@@ -1,10 +1,11 @@
+const { PrismaClient } = require("@prisma/client");
 const { news } = require("./new.js");
-const db = require("./db");
-const { NextResponse } = require("next/server");
+
+const prisma = new PrismaClient();
 
 async function seedPost() {
   try {
-    const insertedValues = await db.post.createMany({
+    const insertedValues = await prisma.post.createMany({
       data: news,
       skipDuplicates: true,
     });
@@ -13,16 +14,21 @@ async function seedPost() {
     }
   } catch (e) {
     console.error("Error inserting posts:", e);
-    return NextResponse.json(
-      {
-        message: "Internal server error",
-      },
-      {
-        status: 500,
-      }
-    );
+    process.exit(1); // Exit with error code
+  } finally {
+    await prisma.$disconnect();
   }
 }
+
+seedPost()
+  .then(() => {
+    console.log("Seeding finished.");
+    process.exit(0); // Exit without error code
+  })
+  .catch((e) => {
+    console.error("Seeding failed:", e);
+    process.exit(1); // Exit with error code
+  });
 
 // export async function TakePost(clientid) {
 //   try {
@@ -51,5 +57,3 @@ async function seedPost() {
 //     );
 //   }
 // }
-
-seedPost();

@@ -3,21 +3,22 @@ export type PostEdit = {
   title: string;
   author: string;
   publish: Date;
+  story: string;
   action: "edit" | "delete";
 };
 
 export type Post = {
-  id: string;
+  id: number;
   auth: string;
   date: string;
   description: string;
   title: string;
 };
-
-export type ViewPost = {
-  id: string;
+export type CreatePost = {
+  id: number;
   auth: string;
   date: string;
   description: string;
   title: string;
+  story: string;
 };
