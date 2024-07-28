@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full border-b bg-gray-950 ${
+      className={`sticky top-0 z-40 w-full border-b bg-cyan-500 ${
         scrolled ? "shadow-md" : ""
       }`}
     >
@@ -52,16 +52,24 @@ export default function Navbar() {
             {!session ? (
               <>
                 <li>
-                  <Link href="/">Home</Link>
+                  <Link href="/" className="text-lg">
+                    Home
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/auth/login">Login</Link>
+                  <Link href="/auth/login" className="text-lg">
+                    Login
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/auth/register">Register</Link>
+                  <Link href="/auth/register" className="text-lg">
+                    Register
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/Home">View News</Link>
+                  <Link href="/Home" className="text-lg">
+                    View News
+                  </Link>
                 </li>
               </>
             ) : (
@@ -74,18 +82,18 @@ export default function Navbar() {
                 <li>
                   <Dropdown>
                     <DropdownTrigger>
-                      <Button>User</Button>
+                      <Button className="text-lg">User</Button>
                     </DropdownTrigger>
                     <DropdownMenu>
-                      <DropdownItem key="account" className="text-[18px]">
+                      <DropdownItem key="account" className="text-lg">
                         Account
                       </DropdownItem>
-                      <DropdownItem key="posts" className="text-[18px]">
+                      <DropdownItem key="posts" className="text-lg">
                         Posts
                       </DropdownItem>
                       <DropdownItem
                         key="logout"
-                        className="text-[18px]"
+                        className="text-lg"
                         onClick={() => signOut()}
                       >
                         Log Out

@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -8,46 +8,54 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useSession } from "next-auth/react";
 
-type NewsItem = {
+interface CardsProps {
   id: number;
   title: string;
   date: string;
   description: string;
   auth: string;
-};
-
-type CardsProps = {
-  news: NewsItem[];
-  onEditClick: (id: string) => void;
-};
+}
 import NewCard from "./NewCard";
+import { Key } from "react";
 
-export default function Cards({ news, onEditClick }: CardsProps) {
+export default function Cards({
+  id,
+  title,
+  date,
+  description,
+  auth,
+}: CardsProps) {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const handleEditClick = (id: number) => {
+    if (session) {
+      router.push(`/View/${id}`);
+    } else {
+      router.push("/auth/login");
+    }
+  };
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {news.map((item) => (
-        <Card
-          key={item.id}
-          className="group hover:bg-sky-500 cursor-pointer"
-          onClick={() => onEditClick(item.id)}
-        >
-          <CardHeader>
-            <CardTitle className="group-hover:text-white">
-              {item.title}
-            </CardTitle>
-            <CardDescription className="group-hover:text-white">
-              {item.date}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="group-hover:text-white">{item.description}</p>
-          </CardContent>
-          <CardFooter>
-            <p className="group-hover:text-white">{item.auth}</p>
-          </CardFooter>
-        </Card>
-      ))}
+      <Card
+        key={id}
+        className="group hover:bg-sky-500 cursor-pointer"
+        onClick={() => handleEditClick(id)}
+      >
+        <CardHeader>
+          <CardTitle className="group-hover:text-white">{title}</CardTitle>
+          <CardDescription className="group-hover:text-white">
+            {date}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="group-hover:text-white">{description}</p>
+        </CardContent>
+        <CardFooter>
+          <p className="group-hover:text-white">{auth}</p>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

@@ -1,26 +1,33 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import Cards from "@/components/Cards/Cards";
-import { news as originalNews } from "@/lib/new";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import SavePost from "@/ui/CreatePost/create-post";
+// import { useEffect, useState } from "react";
 
-export default function HomePage() {
-  const { data: session } = useSession();
-  const router = useRouter();
-  const [news, setNews] = useState(originalNews);
-  const handleEditClick = (id: string) => {
-    if (session) {
-      router.push(`/View/${id}`);
-    } else {
-      router.push("/auth/login");
-    }
-  };
+import { getBlogpost } from "@/lib/actions";
+import { Key } from "react";
+
+export default async function HomePage() {
+  // const [news, setNews] = useState({});
+  const newsdata = await getBlogpost();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Cards news={originalNews} onEditClick={handleEditClick} />
+      {newsdata.map(
+        (item: {
+          id: Key;
+          title: string;
+          date: string;
+          description: string;
+          auth: string;
+        }) => {
+          <Cards
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            date={item.date}
+            description={item.description}
+            auth={item.auth}
+          />;
+        }
+      )}
     </main>
   );
 }

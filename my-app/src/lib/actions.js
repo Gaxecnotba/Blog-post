@@ -1,40 +1,90 @@
-const { PrismaClient } = require("@prisma/client");
-const { news } = require("./new.js");
+// const { news } = require("./new.js");
+// async function seedPost() {
+//   try {
+//     const insertedValues = await prisma.post.createMany({
+//       data: news,
+//       skipDuplicates: true,
+//     });
+//     if (insertedValues) {
+//       console.log("Posts inserted successfully");
+//     }
+//   } catch (e) {
+//     console.error("Error inserting posts:", e);
+//     process.exit(1);
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }
+"use server";
 
+const { revalidatePath } = require("next/cache");
+
+// seedPost()
+//   .then(() => {
+//     console.log("Seeding finished.");
+//     process.exit(0);
+//   })
+//   .catch((e) => {
+//     console.error("Seeding failed:", e);
+//     process.exit(1);
+//   });
+
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-async function seedPost() {
+export async function getBlogpost() {
   try {
-    const insertedValues = await prisma.post.createMany({
-      data: news,
-      skipDuplicates: true,
+    const res = await prisma.post.findMany({
+      where: {
+        id: 1,
+      },
     });
-    if (insertedValues) {
-      console.log("Posts inserted successfully");
-    }
-  } catch (e) {
-    console.error("Error inserting posts:", e);
-    process.exit(1); // Exit with error code
-  } finally {
-    await prisma.$disconnect();
+    revalidatePath("http://localhost:3000/Home");
+    console.log(res);
+    return res;
+  } catch {
+    (e) => {
+      console.error("Seeding failed:", e);
+    };
   }
 }
 
-seedPost()
-  .then(() => {
-    console.log("Seeding finished.");
-    process.exit(0); // Exit without error code
-  })
-  .catch((e) => {
-    console.error("Seeding failed:", e);
-    process.exit(1); // Exit with error code
-  });
+export async function getById(pid) {
+  const pid1 = parseInt(pid);
+  try {
+    const res = prisma.post.findUnique({ where: { id: pid1 } });
+    revalidatePath(`/View/${pid}`);
+    return res;
+  } catch (e) {
+    console.error("Error fetching posts:", e);
+    throw e;
+  }
+}
+
+export async function createnewPost(auth, date, description, title) {
+  try {
+    const res = await prisma.post.create({
+      data: {
+        title: title,
+        auth: auth,
+        date: date,
+        description: description,
+      },
+      skipDuplicates: true,
+    });
+    revalidatePath("/CreatePost");
+    return res;
+  } catch (e) {
+    console.error("Error inserting posts:", e);
+  }
+}
 
 export async function TakePost(clientid) {
+  const idc = parseInt(clientid);
   try {
-    const selectedPost = await db.post.findUnique({
+    const selectedPost = await prisma.post.findUnique({
       where: {
-        id: clientid,
+        id: idc,
       },
     });
 
@@ -55,5 +105,7 @@ export async function TakePost(clientid) {
         status: 500,
       }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
