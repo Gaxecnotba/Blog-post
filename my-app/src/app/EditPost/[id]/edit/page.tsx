@@ -3,26 +3,21 @@
 import { useEffect, useState } from "react";
 import { news } from "@/lib/new";
 import SavePost from "@/ui/CreatePost/create-post";
+import { getById } from "@/lib/actions";
+import { updatePost } from "@/lib/actions";
 
-export default function EditCard({ params }: { params: { id: string } }) {
-  const id: string = params.id;
+export default function EditCard({ params }: { params: { id: number } }) {
+  const id: number = params.id;
   const [card, setCard] = useState({});
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    try {
-      if (id) {
-        const selectedCard = news.find((item) => item.id === id);
-        if (selectedCard) {
-          setCard(selectedCard);
-        }
-      } else {
-        console.error("Card id not found");
-      }
-    } catch (e) {
-      console.error(e);
-      setError(true);
+    async function fetchPost() {
+      const post = await getById(id);
+      console.log(post);
+      setCard(post);
     }
+    fetchPost();
   }, [id]);
 
   const handleInputChange = (e: any) => {
@@ -33,13 +28,20 @@ export default function EditCard({ params }: { params: { id: string } }) {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log("Card saved:", card);
+    await updatePost({
+      id: card.id,
+      title: card.title,
+      auth: card.auth,
+      date: card.date,
+      description: card.description,
+    });
   };
   return (
     <div className="h-[calc(100vh-6rem)] flex justify-center items-center">
       <h1 className="text-slate-200 font-bold text-4xl mb-4">Edit Card</h1>
-      <form className="w-1/2">
+      <form className="w-1/2" key={card.id} onSubmit={handleSave}>
         <label htmlFor="title" className="text-slate-500  mb-2 block text-sm">
           Title
         </label>
@@ -49,6 +51,15 @@ export default function EditCard({ params }: { params: { id: string } }) {
           value={card.title}
           onChange={handleInputChange}
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
+        />
+        <label htmlFor="auth" className="text-slate-500  mb-2 block text-sm">
+          Author
+        </label>
+        <textarea
+          name="auth"
+          value={card.auth}
+          onChange={handleInputChange}
+          className="p-1 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full bg-cover"
         />
         <label htmlFor="date" className="text-slate-500  mb-2 block text-sm">
           Date
@@ -71,15 +82,6 @@ export default function EditCard({ params }: { params: { id: string } }) {
           value={card.description}
           onChange={handleInputChange}
           className="block w-full rounded-md border-0 py-1.5 bg-slate-900 text-slate-300 resize-vertical"
-        />
-        <label htmlFor="auth" className="text-slate-500  mb-2 block text-sm">
-          Author
-        </label>
-        <textarea
-          name="auth"
-          value={card.auth}
-          onChange={handleInputChange}
-          className="p-1 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full bg-cover"
         />
         <button
           type="button"

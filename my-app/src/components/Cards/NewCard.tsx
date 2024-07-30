@@ -12,18 +12,21 @@ import { CreatePost } from "@/lib/definitions";
 export default function NewCard({ data }: { data: CreatePost }) {
   return (
     <>
-      <h1>View Card</h1>
-      <div className="container mx-auto h-80">
-        <Card>
+      <div>
+        <Card className="group hover:bg-sky-500 cursor-pointer border-stone-400 bg-orange-500">
           <CardHeader>
-            <CardTitle>{data.title}</CardTitle>
-            <small>{data.date}</small>
+            <CardTitle className="group-hover:text-white">
+              {data.title}
+            </CardTitle>
+            <CardDescription className="group-hover:text-white">
+              {data.date}
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <CardDescription>{data.description}</CardDescription>
+            <p>{data.description}</p>
           </CardContent>
           <CardFooter>
-            <small>Author: {data.auth}</small>
+            <p className="group-hover:text-white">Author: {data.auth}</p>
           </CardFooter>
         </Card>
       </div>

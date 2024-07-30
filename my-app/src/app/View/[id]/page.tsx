@@ -2,30 +2,24 @@
 
 import { useEffect, useState } from "react";
 import ViewPost from "@/ui/EditPost/view-post";
-import { news } from "@/lib/new";
 import { useSession } from "next-auth/react";
-import { UpdatePost, CreatePost } from "@/ui/EditPost/buttons";
+import { UpdatePost, DeletePost } from "@/ui/EditPost/buttons";
 import { getById } from "@/lib/actions";
 
-export default function Post({ params }: { params: { id: string } }) {
+export default function Post({ params }: { params: { id: number } }) {
   const { data: session } = useSession();
   const [selectedPost, setSelectedPost] = useState({});
-  const id: string = params.id;
-  console.log(id);
-  // const checkid =getById(id);
-  // const selectedById= async()=>{
-  //   if(id == await checkid){
+  const id: number = params.id;
 
-  //   }
-  // }
   useEffect(() => {
-    const post = news.find((item: { id: string }) => item.id === id);
-    if (post) {
+    async function fetchPost() {
+      const post = await getById(id);
+      console.log(post);
       setSelectedPost(post);
-    } else {
-      console.error("Card not found");
     }
+    fetchPost();
   }, [id]);
+
   return (
     <div>
       {!session ? (
@@ -33,7 +27,10 @@ export default function Post({ params }: { params: { id: string } }) {
       ) : (
         <>
           <ViewPost post={selectedPost} />
-          <UpdatePost id={id} /> <CreatePost />
+          <div className="flex justify-center p-5">
+            <UpdatePost id={selectedPost.id} />{" "}
+            <DeletePost id={selectedPost.id} />
+          </div>
         </>
       )}
     </div>

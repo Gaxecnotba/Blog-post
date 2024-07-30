@@ -34,17 +34,13 @@ const prisma = new PrismaClient();
 
 export async function getBlogpost() {
   try {
-    const res = await prisma.post.findMany({
-      where: {
-        id: 1,
-      },
-    });
+    const res = await prisma.post.findMany();
     revalidatePath("http://localhost:3000/Home");
-    console.log(res);
+    console.log("es esto?:", res);
     return res;
   } catch {
     (e) => {
-      console.error("Seeding failed:", e);
+      console.error("failed to create new post:", e);
     };
   }
 }
@@ -52,8 +48,8 @@ export async function getBlogpost() {
 export async function getById(pid) {
   const pid1 = parseInt(pid);
   try {
-    const res = prisma.post.findUnique({ where: { id: pid1 } });
-    revalidatePath(`/View/${pid}`);
+    const res = await prisma.post.findUnique({ where: { id: pid1 } });
+    console.log("esto es res:", res);
     return res;
   } catch (e) {
     console.error("Error fetching posts:", e);
@@ -61,51 +57,45 @@ export async function getById(pid) {
   }
 }
 
-export async function createnewPost(auth, date, description, title) {
+export async function createnewPost({ title, auth, date, description }) {
   try {
     const res = await prisma.post.create({
       data: {
-        title: title,
-        auth: auth,
-        date: date,
-        description: description,
+        title,
+        auth,
+        date,
+        description,
       },
-      skipDuplicates: true,
     });
-    revalidatePath("/CreatePost");
+    revalidatePath("http://localhost:3000/Home");
+    console.log("esto es res new post:", res);
     return res;
   } catch (e) {
     console.error("Error inserting posts:", e);
   }
 }
 
-export async function TakePost(clientid) {
-  const idc = parseInt(clientid);
+export async function updatePost({ id, title, auth, date, description }) {
   try {
-    const selectedPost = await prisma.post.findUnique({
-      where: {
-        id: idc,
-      },
+    const updatedPost = await prisma.post.update({
+      where: { id },
+      data: { title, auth, date, description },
     });
-
-    if (selectedPost) {
-      console.log("Post retrieved:", selectedPost);
-      return selectedPost;
-    } else {
-      console.log("Post not found");
-      return null;
-    }
+    revalidatePath("http://localhost:3000/Home");
+    console.log("Post updated:", updatedPost);
+    return updatedPost;
   } catch (e) {
-    console.error("Error retrieving post:", e);
-    return NextResponse.json(
-      {
-        message: "Internal server error",
-      },
-      {
-        status: 500,
-      }
-    );
-  } finally {
-    await prisma.$disconnect();
+    console.error("Error updating post:", e);
+  }
+}
+
+export async function deletePost(pid) {
+  try {
+    const deletedPost = await prisma.post.delete({ where: { id: pid } });
+    revalidatePath("http://localhost:3000/Home");
+    console.log("Post deleted:", deletedPost);
+    return deletedPost;
+  } catch (e) {
+    console.error("Error deleting post:", e);
   }
 }

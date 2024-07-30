@@ -1,32 +1,19 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
+  CardFooter,
 } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
-
-interface CardsProps {
-  id: number;
-  title: string;
-  date: string;
-  description: string;
-  auth: string;
-}
-import NewCard from "./NewCard";
-import { Key } from "react";
-
-export default function Cards({
-  id,
-  title,
-  date,
-  description,
-  auth,
-}: CardsProps) {
+import { useRouter } from "next/navigation";
+type CardsProps = {
+  news: [];
+};
+export default function Cards({ news }: CardsProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const handleEditClick = (id: number) => {
@@ -36,26 +23,31 @@ export default function Cards({
       router.push("/auth/login");
     }
   };
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <Card
-        key={id}
-        className="group hover:bg-sky-500 cursor-pointer"
-        onClick={() => handleEditClick(id)}
-      >
-        <CardHeader>
-          <CardTitle className="group-hover:text-white">{title}</CardTitle>
-          <CardDescription className="group-hover:text-white">
-            {date}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="group-hover:text-white">{description}</p>
-        </CardContent>
-        <CardFooter>
-          <p className="group-hover:text-white">{auth}</p>
-        </CardFooter>
-      </Card>
+      {news.map((item) => (
+        <Card
+          key={item.id}
+          className="group hover:bg-sky-500 cursor-pointer border-stone-400 bg-orange-500"
+          onClick={() => handleEditClick(item.id)}
+        >
+          <CardHeader>
+            <CardTitle className="group-hover:text-white">
+              {item.title}
+            </CardTitle>
+            <CardDescription className="group-hover:text-white">
+              {item.date}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="group-hover:text-white">{item.description}</p>
+          </CardContent>
+          <CardFooter>
+            <p className="group-hover:text-white">{item.auth}</p>
+          </CardFooter>
+        </Card>
+      ))}
     </div>
   );
 }

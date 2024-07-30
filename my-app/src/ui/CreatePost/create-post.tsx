@@ -1,16 +1,12 @@
-"use client";
-
+import React from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 
 interface SavePostProps {
   onSave: (newPost: {
-    id: string;
     title: string;
+    auth: string;
     date: string;
     description: string;
-    auth: string;
-    story: string;
   }) => void;
 }
 
@@ -18,15 +14,12 @@ export default function SavePost({ onSave }: SavePostProps) {
   const { register, handleSubmit } = useForm();
 
   const handleOnSubmit = handleSubmit((data) => {
-    const newPost = {
-      id: Date.now().toString(),
+    onSave({
       title: data.title,
+      auth: data.auth,
       date: data.date,
       description: data.description,
-      auth: data.auth,
-      story: data.story,
-    };
-    onSave(newPost);
+    });
   });
 
   return (
@@ -41,9 +34,17 @@ export default function SavePost({ onSave }: SavePostProps) {
         <input
           id="title"
           type="text"
-          {...register("title")}
+          {...register("title", { required: "Title is required" })}
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
-          required
+        />
+        <label htmlFor="auth" className="text-slate-500 mb-2 block text-lg">
+          Author
+        </label>
+        <input
+          id="auth"
+          type="text"
+          {...register("auth", { required: "Author is required" })}
+          className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
         />
         <label htmlFor="date" className="text-slate-500 mb-2 block text-lg">
           Date
@@ -51,7 +52,7 @@ export default function SavePost({ onSave }: SavePostProps) {
         <input
           id="date"
           type="text"
-          {...register("date")}
+          {...register("date", { required: "Date is required" })}
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
         />
         <label
@@ -61,29 +62,15 @@ export default function SavePost({ onSave }: SavePostProps) {
           Description
         </label>
         <textarea
-          {...register("description")}
-          className="bg-slate-900 text-slate-300 w-full bg-contain"
-        />
-        <label htmlFor="auth" className="text-slate-500 mb-2 block text-lg">
-          Author
-        </label>
-        <textarea
-          id="auth"
-          {...register("auth")}
-          className="bg-slate-900 text-slate-300 w-full"
-        />
-        <label htmlFor="story" className="text-slate-500 mb-2 block text-lg">
-          Story
-        </label>
-        <textarea
-          {...register("story")}
+          id="description"
+          {...register("description", { required: "Description is required" })}
           className="bg-slate-900 text-slate-300 w-full"
         />
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2"
         >
-          <Link href={"/Home"}>Save</Link>
+          Save New Post
         </button>
       </form>
     </div>

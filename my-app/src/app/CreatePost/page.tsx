@@ -1,20 +1,37 @@
 "use client";
 import SavePost from "@/ui/CreatePost/create-post";
-import { useState } from "react";
-import { news as originalNews } from "@/lib/new";
-import NewCard from "@/components/Cards/NewCard";
+import { useEffect, useState } from "react";
+import { createnewPost } from "@/lib/actions";
 export default function CreatePost() {
-  const [news, setNews] = useState(originalNews);
+  const [news, setNews] = useState({
+    title: "",
+    auth: "",
+    date: "",
+    description: "",
+  });
   const handleAddedNews = (newPost: {
-    id: string;
+    title: string;
     auth: string;
     date: string;
     description: string;
-    title: string;
-    story: string;
   }) => {
-    setNews([...news, newPost]);
+    console.log(newPost);
+    setNews(newPost);
   };
+  useEffect(() => {
+    if (news.title && news.auth && news.date && news.description) {
+      const fetchPost = async () => {
+        const newpost = await createnewPost({
+          title: news.title,
+          auth: news.auth,
+          date: news.date,
+          description: news.description,
+        });
+        console.log(newpost);
+      };
+      fetchPost();
+    }
+  }, [news]);
   return (
     <>
       <SavePost onSave={handleAddedNews} />

@@ -1,11 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Post } from "@/lib/definitions";
 
 export default function ViewPost({ post }: { post: Post }) {
@@ -15,11 +7,13 @@ export default function ViewPost({ post }: { post: Post }) {
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl py-2 pb-2">
           {post.title}
         </h1>
-        <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-          <div>
+        <div className="flex-initial items-center space-x-4  text-sm px-2">
+          <div className=" flex-none px-2">
             <p>{post.auth}</p>
           </div>
-          <div className="flex items-center space-x-1">{post.date}</div>
+          <div className="flex-initial items-center ps-px ">
+            <p>{post.date}</p>
+          </div>
         </div>
         <div className="justify-center items-center">
           <p>{post.description}</p>
@@ -61,23 +55,6 @@ export default function ViewPost({ post }: { post: Post }) {
             inventore eveniet ea eligendi? Consequuntur itaque quisquam tempora
             minima corporis quod necessitatibus repellat accusamus aliquid
             dolorem ratione non perferendis, voluptas inventore magnam fugit.
-            Ullam quae enim maiores blanditiis, consequatur fuga reprehenderit
-            sint doloremque recusandae est ea ut ratione iure et quia unde
-            exercitationem praesentium. Illum culpa nesciunt, dolores ea, cum ad
-            animi necessitatibus tenetur repellendus dolorem maxime? Modi eius
-            magni consectetur nesciunt, placeat facilis veritatis necessitatibus
-            velit consequuntur quidem debitis eos obcaecati illum nostrum vero
-            deserunt? Voluptatum, vitae reprehenderit. Temporibus nulla quis
-            aliquid deserunt dolorem qui consectetur quasi vel, provident
-            pariatur magnam molestias impedit totam incidunt quia asperiores
-            quibusdam minus. Tenetur nulla distinctio magni doloribus
-            asperiores, omnis consequuntur iste inventore veritatis nostrum
-            error labore culpa! Est voluptates, sunt, repellendus perferendis
-            iusto blanditiis, quos sint placeat quisquam hic quis! Id itaque
-            quod possimus, magni, sint, modi est hic incidunt sit repellat
-            magnam ut quibusdam facere debitis omnis a recusandae. Quam dolor
-            repellat quae. Provident fugiat esse assumenda adipisci quia
-            veritatis deleniti error ratione blanditiis. Perspiciatis?
           </p>
         </div>
       </article>
