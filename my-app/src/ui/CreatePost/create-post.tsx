@@ -1,26 +1,42 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import { createnewPost } from "@/lib/actions";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-interface SavePostProps {
-  onSave: (newPost: {
-    title: string;
-    auth: string;
-    date: string;
-    description: string;
-  }) => void;
-}
-
-export default function SavePost({ onSave }: SavePostProps) {
-  const { register, handleSubmit } = useForm();
-
-  const handleOnSubmit = handleSubmit((data) => {
-    onSave({
-      title: data.title,
-      auth: data.auth,
-      date: data.date,
-      description: data.description,
-    });
+export default function SavePost() {
+  const [formData, setFormData] = useState({
+    title: "",
+    auth: "",
+    date: "",
+    description: "",
   });
+
+  const router = useRouter();
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleOnSubmit = async () => {
+    console.log("enviando");
+
+    const res = await createnewPost(
+      formData.title,
+      formData.auth,
+      formData.date,
+      formData.description
+    );
+    if (res) {
+      console.log("Post Created");
+      return true;
+    }
+  };
+  const handleonClick = async () => {
+    await handleOnSubmit();
+    router.push("http://localhost:3000/Home");
+  };
 
   return (
     <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
@@ -33,9 +49,11 @@ export default function SavePost({ onSave }: SavePostProps) {
         </label>
         <input
           id="title"
+          name="title"
           type="text"
-          {...register("title", { required: "Title is required" })}
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
+          onChange={handleInputChange}
+          value={formData.title}
         />
         <label htmlFor="auth" className="text-slate-500 mb-2 block text-lg">
           Author
@@ -43,8 +61,10 @@ export default function SavePost({ onSave }: SavePostProps) {
         <input
           id="auth"
           type="text"
-          {...register("auth", { required: "Author is required" })}
+          name="auth"
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
+          onChange={handleInputChange}
+          value={formData.auth}
         />
         <label htmlFor="date" className="text-slate-500 mb-2 block text-lg">
           Date
@@ -52,8 +72,10 @@ export default function SavePost({ onSave }: SavePostProps) {
         <input
           id="date"
           type="text"
-          {...register("date", { required: "Date is required" })}
+          name="date"
           className="p-2 rounded-none block mb-1 bg-slate-900 text-slate-300 w-full"
+          onChange={handleInputChange}
+          value={formData.date}
         />
         <label
           htmlFor="description"
@@ -63,12 +85,15 @@ export default function SavePost({ onSave }: SavePostProps) {
         </label>
         <textarea
           id="description"
-          {...register("description", { required: "Description is required" })}
+          name="description"
           className="bg-slate-900 text-slate-300 w-full"
+          onChange={handleInputChange}
+          value={formData.description}
         />
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2"
+          onClick={handleonClick}
         >
           Save New Post
         </button>

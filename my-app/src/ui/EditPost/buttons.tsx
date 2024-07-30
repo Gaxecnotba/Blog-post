@@ -21,13 +21,16 @@ export function CreatePost() {
 }
 
 import { deletePost } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
-export function DeletePost({ id }: { id: number } ) {
+export function DeletePost({ id }: { id: number }) {
   const pid: number = id;
+  const router = useRouter();
   const handleDelete = async () => {
     try {
       const postdeleted = await deletePost(pid);
       if (postdeleted) {
+        router.push("/Home");
         console.log("Post Deleted");
       }
     } catch (error) {

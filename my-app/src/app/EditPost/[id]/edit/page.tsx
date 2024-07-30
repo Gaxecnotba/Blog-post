@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { news } from "@/lib/new";
-import SavePost from "@/ui/CreatePost/create-post";
 import { getById } from "@/lib/actions";
 import { updatePost } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 export default function EditCard({ params }: { params: { id: number } }) {
   const id: number = params.id;
   const [card, setCard] = useState({});
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchPost() {
@@ -37,6 +37,10 @@ export default function EditCard({ params }: { params: { id: number } }) {
       date: card.date,
       description: card.description,
     });
+  };
+  const handleonClick = async () => {
+    await handleSave();
+    router.push("/Home");
   };
   return (
     <div className="h-[calc(100vh-6rem)] flex justify-center items-center">
@@ -85,7 +89,7 @@ export default function EditCard({ params }: { params: { id: number } }) {
         />
         <button
           type="button"
-          onClick={handleSave}
+          onClick={handleonClick}
           className="w-full bg-blue-500  text-white p-3 rounded-lg mt-2"
         >
           Save

@@ -26,11 +26,6 @@ export default function Login() {
     } else {
       setError(res?.error);
     }
-    // if (res?.error) {
-    //   alert(res.error);
-    // } else {
-    //   console.log("sending to /homepage");
-    // }
   });
   return (
     <>

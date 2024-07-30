@@ -57,7 +57,7 @@ export async function getById(pid) {
   }
 }
 
-export async function createnewPost({ title, auth, date, description }) {
+export async function createnewPost(title, auth, date, description) {
   try {
     const res = await prisma.post.create({
       data: {
