@@ -6,7 +6,21 @@ import { useRouter } from "next/navigation";
 
 export default function EditCard({ params }: { params: { id: number } }) {
   const id: number = params.id;
-  const [card, setCard] = useState({});
+  interface Card {
+    id: number;
+    title: string;
+    auth: string;
+    date: string;
+    description: string;
+  }
+
+  const [card, setCard] = useState<Card>({
+    id: 0,
+    title: "",
+    auth: "",
+    date: "",
+    description: "",
+  });
   const [error, setError] = useState(false);
   const router = useRouter();
 
@@ -14,7 +28,7 @@ export default function EditCard({ params }: { params: { id: number } }) {
     async function fetchPost() {
       const post = await getById(id);
       console.log(post);
-      setCard(post);
+      setCard(post as Card);
     }
     fetchPost();
   }, [id]);

@@ -13,7 +13,7 @@ export default function SavePost() {
 
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { name: any; value: any } }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,

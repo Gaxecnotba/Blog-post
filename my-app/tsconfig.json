@@ -35,7 +35,7 @@
     "src/lib/new.js",
     "src/lib/db.js",
     "src/middleware.js",
-    "src/lib/actions.tjs",
+    "src/lib/actions.ts",
     "src/lib/actions.js"
   ],
   "exclude": [

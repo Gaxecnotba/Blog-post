@@ -10,8 +10,16 @@ import {
 } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+type NewsItem = {
+  id: number;
+  title: string;
+  date: string;
+  description: string;
+  auth: string;
+};
+
 type CardsProps = {
-  news: [];
+  news: NewsItem[];
 };
 export default function Cards({ news }: CardsProps) {
   const router = useRouter();

@@ -1,4 +1,5 @@
 "use client";
+
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar-menu/Navbar";
 import Footer from "@/components/footer/Footer";
@@ -7,13 +8,12 @@ import "@/app/global.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Layout({
-  children,
-  session,
-}: {
+interface LayoutProps {
   children: React.ReactNode;
-  session: any;
-}) {
+  session: never;
+}
+
+export default function Layout({ children, session }: LayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>

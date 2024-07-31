@@ -8,14 +8,28 @@ import { getById } from "@/lib/actions";
 
 export default function Post({ params }: { params: { id: number } }) {
   const { data: session } = useSession();
-  const [selectedPost, setSelectedPost] = useState({});
+  interface Post {
+    id: string;
+    auth: string;
+    date: string;
+    description: string;
+    title: string;
+  }
+
+  const [selectedPost, setSelectedPost] = useState<Post>({
+    id: "",
+    auth: "",
+    date: "",
+    description: "",
+    title: "",
+  });
   const id: number = params.id;
 
   useEffect(() => {
     async function fetchPost() {
       const post = await getById(id);
       console.log(post);
-      setSelectedPost(post);
+      setSelectedPost(post as unknown as Post);
     }
     fetchPost();
   }, [id]);
@@ -28,8 +42,8 @@ export default function Post({ params }: { params: { id: number } }) {
         <>
           <ViewPost post={selectedPost} />
           <div className="flex justify-center p-5">
-            <UpdatePost id={selectedPost.id} />{" "}
-            <DeletePost id={selectedPost.id} />
+            <UpdatePost id={parseInt(selectedPost.id)} />{" "}
+            <DeletePost id={parseInt(selectedPost.id)} />
           </div>
         </>
       )}

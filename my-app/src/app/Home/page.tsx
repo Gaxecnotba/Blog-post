@@ -6,7 +6,7 @@ export default async function HomePage() {
   const newsdata = await getBlogpost();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Cards news={newsdata} />
+      {newsdata && <Cards news={newsdata} />}
     </main>
   );
 }
