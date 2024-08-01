@@ -4,7 +4,7 @@ import { getById } from "@/lib/actions";
 import { updatePost } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
-export default function EditCard({ params }: { params: { id: number } }) {
+export default function Page({ params }: { params: { id: number } }) {
   const id: number = params.id;
   interface Card {
     id: number;

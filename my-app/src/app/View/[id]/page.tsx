@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { UpdatePost, DeletePost } from "@/ui/EditPost/buttons";
 import { getById } from "@/lib/actions";
 
-export default function Post({ params }: { params: { id: number } }) {
+export default function Page({ params }: { params: { id: number } }) {
   const { data: session } = useSession();
   interface Post {
     id: string;

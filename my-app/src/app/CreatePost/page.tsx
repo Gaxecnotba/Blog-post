@@ -3,7 +3,7 @@ import { createnewPost } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function SavePost() {
+export default function Page() {
   const [formData, setFormData] = useState({
     title: "",
     auth: "",
@@ -29,10 +29,6 @@ export default function SavePost() {
       formData.description
     );
     console.log("Post Created");
-  };
-  const handleonClick = async () => {
-    await handleOnSubmit();
-    router.push("/Home");
   };
 
   return (
@@ -90,7 +86,6 @@ export default function SavePost() {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2"
-          onClick={handleonClick}
         >
           Save New Post
         </button>

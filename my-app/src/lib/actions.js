@@ -17,6 +17,8 @@
 // }
 "use server";
 
+import prisma from "./db";
+
 const { revalidatePath } = require("next/cache");
 
 // seedPost()
@@ -29,13 +31,14 @@ const { revalidatePath } = require("next/cache");
 //     process.exit(1);
 //   });
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+// const { PrismaClient } = require("@prisma/client");
+// const prisma = new PrismaClient();
+// const prisma = require("@/lib/db");
 
 export async function getBlogpost() {
   try {
     const res = await prisma.post.findMany();
-    revalidatePath("http://localhost:3000/Home");
+    revalidatePath("/Home");
     console.log("es esto?:", res);
     return res;
   } catch {
@@ -67,7 +70,7 @@ export async function createnewPost(title, auth, date, description) {
         description,
       },
     });
-    revalidatePath("http://localhost:3000/Home");
+    // revalidatePath("/Home");
     console.log("esto es res new post:", res);
     return res;
   } catch (e) {
@@ -81,7 +84,7 @@ export async function updatePost({ id, title, auth, date, description }) {
       where: { id },
       data: { title, auth, date, description },
     });
-    revalidatePath("http://localhost:3000/Home");
+    revalidatePath("/Home");
     console.log("Post updated:", updatedPost);
     return updatedPost;
   } catch (e) {
@@ -92,7 +95,7 @@ export async function updatePost({ id, title, auth, date, description }) {
 export async function deletePost(pid) {
   try {
     const deletedPost = await prisma.post.delete({ where: { id: pid } });
-    revalidatePath("http://localhost:3000/Home");
+    revalidatePath("/Home");
     console.log("Post deleted:", deletedPost);
     return deletedPost;
   } catch (e) {
