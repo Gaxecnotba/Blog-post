@@ -23,7 +23,16 @@ const handler = NextAuth({
           userFound.password
         );
         if (!matchPassword) throw new Error("Wrong password");
-
+        if (userFound.email === "sebaselpr@gmail.com") {
+          await prisma.user.update({
+            where: {
+              email: userFound.email,
+            },
+            data: {
+              isAdmin: true,
+            },
+          });
+        }
         return userFound;
       },
     }),

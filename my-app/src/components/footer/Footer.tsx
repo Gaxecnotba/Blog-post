@@ -8,14 +8,14 @@ export default function Footer() {
         </p>
         <nav className="flex items-center gap-4">
           <Link
-            href="#"
+            href="/About"
             className="text-lg font-medium hover:underline"
             prefetch={false}
           >
             About
           </Link>
           <Link
-            href="#"
+            href="/Contact"
             className="text-lg font-medium hover:underline"
             prefetch={false}
           >
