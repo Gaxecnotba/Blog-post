@@ -14,7 +14,7 @@ export default function Page() {
 
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Contact Form</h2>
-        <form action="/api/contact" method="POST" className="space-y-4">
+        <form className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-1">
               Name
@@ -78,7 +78,7 @@ export default function Page() {
           <strong>Phone:</strong> (121) 322-1230
         </p>
         <p className="mb-2">
-          <strong>Email:</strong> Maydecorations@gmail.com
+          <strong>Email:</strong> reportersaroundtheworld@gmail.com
         </p>
       </div>
     </div>
