@@ -15,12 +15,6 @@
 //     await prisma.$disconnect();
 //   }
 // }
-"use server";
-
-import prisma from "./db";
-
-const { revalidatePath } = require("next/cache");
-
 // seedPost()
 //   .then(() => {
 //     console.log("Seeding finished.");
@@ -34,6 +28,12 @@ const { revalidatePath } = require("next/cache");
 // const { PrismaClient } = require("@prisma/client");
 // const prisma = new PrismaClient();
 // const prisma = require("@/lib/db");
+
+"use server";
+
+import prisma from "./db.js";
+
+const { revalidatePath } = require("next/cache");
 
 export async function getBlogpost() {
   try {
