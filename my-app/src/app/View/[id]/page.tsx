@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { id: number } }) {
 
   useEffect(() => {
     async function fetchPost() {
-      const post = await getById(id);
+      const post = getById(id);
       console.log(post);
       setSelectedPost(post as unknown as Post);
     }

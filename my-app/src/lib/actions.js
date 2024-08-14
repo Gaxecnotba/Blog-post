@@ -1,34 +1,3 @@
-// const { news } = require("./new.js");
-// async function seedPost() {
-//   try {
-//     const insertedValues = await prisma.post.createMany({
-//       data: news,
-//       skipDuplicates: true,
-//     });
-//     if (insertedValues) {
-//       console.log("Posts inserted successfully");
-//     }
-//   } catch (e) {
-//     console.error("Error inserting posts:", e);
-//     process.exit(1);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// }
-// seedPost()
-//   .then(() => {
-//     console.log("Seeding finished.");
-//     process.exit(0);
-//   })
-//   .catch((e) => {
-//     console.error("Seeding failed:", e);
-//     process.exit(1);
-//   });
-
-// const { PrismaClient } = require("@prisma/client");
-// const prisma = new PrismaClient();
-// const prisma = require("@/lib/db");
-
 "use server";
 
 import prisma from "./db.js";
